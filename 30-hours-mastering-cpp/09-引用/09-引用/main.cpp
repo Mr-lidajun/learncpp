@@ -174,6 +174,22 @@ int main() {
 	cout << "age is " << age2 << endl;
 	cout << "rAge is " << rAge2 << endl;
 
+	// 数组名arr其实是数组的地址，也是数组首元素的地址
+	// 数组名arr可以看做是指向数组首元素的指针(int *)
+	int arr[] = {1,2,3};
+	cout << "*arr == 1 is " << (*arr == 1) << endl;
+	*(arr + 2) == 3 == arr[2];
+
+	// 数组的引用-写法1
+	int(&ref)[3] = arr;
+	ref[0] = 5;
+
+	// 数组的引用-写法2
+	// 常引用才能引用常量
+	int* const & ref2 = arr;
+	ref2[0] = 10;
+	
+
 	getchar();
 	return 0;
 }
