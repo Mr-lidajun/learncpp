@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "14-内存空间", "14-内存空间\14-内存空间.vcxproj", "{7280569F-671F-484A-87C4-923030279C23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7280569F-671F-484A-87C4-923030279C23}.Debug|x64.ActiveCfg = Debug|x64
+		{7280569F-671F-484A-87C4-923030279C23}.Debug|x64.Build.0 = Debug|x64
+		{7280569F-671F-484A-87C4-923030279C23}.Debug|x86.ActiveCfg = Debug|Win32
+		{7280569F-671F-484A-87C4-923030279C23}.Debug|x86.Build.0 = Debug|Win32
+		{7280569F-671F-484A-87C4-923030279C23}.Release|x64.ActiveCfg = Release|x64
+		{7280569F-671F-484A-87C4-923030279C23}.Release|x64.Build.0 = Release|x64
+		{7280569F-671F-484A-87C4-923030279C23}.Release|x86.ActiveCfg = Release|Win32
+		{7280569F-671F-484A-87C4-923030279C23}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F5750D6C-3303-44F4-9A83-DE844F1C2E23}
+	EndGlobalSection
+EndGlobal
