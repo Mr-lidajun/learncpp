@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "38-隐式构造", "38-隐式构造\38-隐式构造.vcxproj", "{E1047056-BDDB-49ED-B80D-76EAABE69C17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Debug|x64.ActiveCfg = Debug|x64
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Debug|x64.Build.0 = Debug|x64
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Debug|x86.ActiveCfg = Debug|Win32
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Debug|x86.Build.0 = Debug|Win32
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Release|x64.ActiveCfg = Release|x64
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Release|x64.Build.0 = Release|x64
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Release|x86.ActiveCfg = Release|Win32
+		{E1047056-BDDB-49ED-B80D-76EAABE69C17}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {59EEABD9-C5E8-4957-AE73-4577B68A33AE}
+	EndGlobalSection
+EndGlobal
