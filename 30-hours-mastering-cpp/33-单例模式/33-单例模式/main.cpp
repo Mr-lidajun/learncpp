@@ -12,7 +12,9 @@ class Rocket {
 private:
 	static Rocket* ms_rocket;
 	Rocket() {}
+	Rocket(const Rocket& rocket) {}
 	~Rocket() {}
+	void operator=(const Rocket& rocket) {}
 public:
 	static Rocket* sharedRocket() {
 		// 这里要考虑多线程安全
