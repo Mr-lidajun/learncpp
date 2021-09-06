@@ -247,19 +247,51 @@ void CPVZCheaterDlg::OnBnClickedCourse() {
 		MessageBox(str, CString("警告"), MB_YESNOCANCEL | MB_ICONWARNING);*/
 }
 
+/*
+* 秒杀僵尸
+* 植物大战僵尸 - 植物无视防具秒杀僵尸
+https://www.52pojie.cn/thread-1106398-1-1.html
+(出处: 吾爱破解论坛)
+
+
+现在所有的扣血代码的地址都已经找到了,让我们整理一下
+0054D0C4 - 僵尸扣血
+0054CDDA - 僵尸防具扣血
+0054CA31 - 铁栅门僵尸防具扣血
+注意:不同版本的PVZ这些代码的位置可能不同
+
+*/
 void CPVZCheaterDlg::OnBnClickedKill() {
 	//CButton* button = (CButton*)GetDlgItem(IDC_KILL);
 	//bool checked = IsDlgButtonChecked(IDC_KILL);
+
+	DWORD address1 = 0x0054D0BA;
+	DWORD address2 = 0x0054D60F;
+	DWORD address3 = 0x0054D5FA;
 	if (m_bnKill.GetCheck()) {
-		BYTE data[] = { 0x29, 0xED, 0x90, 0x90 };
-		WriteMemory(data, sizeof(data), 0x0054D0BA);
+		// 如果需要秒杀僵尸
 
-		//BYTE data2[] = { 0x29, 0xC9 };
-		//WriteMemory(data2, sizeof(data2), 0x0054CDD4);
+		// 0054D0C4 - 僵尸扣血
+		BYTE data1[] = { 0x29, 0xED, 0x90, 0x90 };
+		WriteMemory(data1, sizeof(data1), address1);
 
-	} else {
+		// 0054CDDA - 僵尸防具扣血
+		BYTE data2[] = { 0x90, 0x90 };
+		WriteMemory(data2, sizeof(data2), address2);
+
+		// 0054CA31 - 铁栅门僵尸防具扣血
+		BYTE data3[] = { 0x90, 0x90 };
+		WriteMemory(data3, sizeof(data3), address3);
+		
+	} else {// 如果不需要秒杀僵尸
 		BYTE data[] = { 0x2B, 0x6C, 0x24, 0x20 };
 		WriteMemory(data, sizeof(data), 0x0054D0BA);
+
+		BYTE data2[] = { 0x7E, 0x07 };
+		WriteMemory(data2, sizeof(data2), address2);
+
+		BYTE data3[] = { 0x7E, 0x1C };
+		WriteMemory(data3, sizeof(data3), address3);
 	}
 }
 
