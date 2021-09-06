@@ -35,9 +35,13 @@ protected:
 public:
 	afx_msg void OnBnClickedKill();
 	afx_msg void OnBnClickedSun();
-protected:
-	// 秒杀僵尸
+private:
+	/* 友元函数 */
+	friend DWORD monitorThreadFunc(LPVOID);
+	/* 秒杀僵尸 */
 	CButton m_bnKill;
-	// 无限阳光
+	/* 无限阳光 */
 	CButton m_bnSun;
+	/* 子线程句柄 */
+	HANDLE m_monitorThread;
 };

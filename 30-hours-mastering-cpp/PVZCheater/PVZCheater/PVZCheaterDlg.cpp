@@ -8,9 +8,75 @@
 #include "PVZCheaterDlg.h"
 #include "afxdialogex.h"
 
+#define log(fmt, ...) \
+CString str; \
+str.Format(CString(fmt), __VA_ARGS__); \
+AfxMessageBox(str);
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
+
+static CPVZCheaterDlg* g_dlg;
+static HANDLE g_processHandle;
+
+// 将某个值写入植物大战僵尸内存（后面的可变参数是地址链，要以-1结尾）
+void WriteMemory(void* value, DWORD valueSize, ...) {
+	if (value == NULL || valueSize == 0 || g_processHandle == NULL) return;
+
+	DWORD tempValue = 0;
+
+	va_list addresses;
+	va_start(addresses, valueSize);
+	DWORD offset = 0;
+	DWORD lastAddress = 0;
+	while ((offset = va_arg(addresses, DWORD)) != -1) {
+		lastAddress = tempValue + offset;
+		::ReadProcessMemory(g_processHandle, (LPCVOID)lastAddress, &tempValue, sizeof(DWORD), NULL);
+	}
+	va_end(addresses);
+
+	::WriteProcessMemory(g_processHandle, (LPVOID)lastAddress, value, valueSize, NULL);
+}
+
+/*
+* value: 数据
+* valueSize： 数据大小
+* address： 内存地址
+*/
+void WriteMemory(void* value, DWORD valueSize, DWORD address) {
+	WriteMemory(value, valueSize, address, -1);
+}
+
+// 用来监控游戏的线程
+DWORD monitorThreadFunc(LPVOID lpThreadParameter) {
+	while (1) {
+		// 获取植物大战僵尸窗口的句柄
+		HWND windowHandle = FindWindow(CString("MainWindow"), CString("Plants vs. Zombies"));
+
+		if (windowHandle == NULL) {
+			g_dlg->m_bnKill.SetCheck(FALSE);
+			g_dlg->m_bnSun.SetCheck(FALSE);
+			g_dlg->m_bnKill.EnableWindow(FALSE);
+			g_dlg->m_bnSun.EnableWindow(FALSE);
+
+			g_processHandle = NULL;
+		} else if (g_processHandle == NULL) {
+			g_dlg->m_bnKill.EnableWindow(TRUE);
+			g_dlg->m_bnSun.EnableWindow(TRUE);
+
+			// 获得植物大战僵尸的进程ID
+			DWORD processPid;
+			GetWindowThreadProcessId(windowHandle, &processPid);
+			// 获得植物大战僵尸的进程句柄
+			g_processHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processPid);
+		}
+
+		// 休息睡眠
+		Sleep(1000);
+	}
+	return NULL;
+}
 
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
@@ -96,6 +162,11 @@ BOOL CPVZCheaterDlg::OnInitDialog() {
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	// 创建一条子线程，监控游戏的打开或者关闭
+	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE) monitorThreadFunc, NULL, NULL, NULL);
+
+	// 保存对话框
+	g_dlg = this;
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -140,11 +211,6 @@ HCURSOR CPVZCheaterDlg::OnQueryDragIcon() {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-#define log(fmt, ...) \
-CString str; \
-str.Format(CString(fmt), __VA_ARGS__); \
-AfxMessageBox(str);
-
 void CPVZCheaterDlg::OnBnClickedCourse() {
 	//int age = 20;
 	//TRACE("age is %d\n", age); //age is 20
@@ -180,9 +246,15 @@ void CPVZCheaterDlg::OnBnClickedKill() {
 	//CButton* button = (CButton*)GetDlgItem(IDC_KILL);
 	//bool checked = IsDlgButtonChecked(IDC_KILL);
 	if (m_bnKill.GetCheck()) {
-		log("check");
+		BYTE data[] = { 0x29, 0xED, 0x90, 0x90 };
+		WriteMemory(data, sizeof(data), 0x0054D0BA);
+
+		//BYTE data2[] = { 0x29, 0xC9 };
+		//WriteMemory(data2, sizeof(data2), 0x0054CDD4);
+
 	} else {
-		log("uncheck");
+		BYTE data[] = { 0x2B, 0x6C, 0x24, 0x20 };
+		WriteMemory(data, sizeof(data), 0x0054D0BA);
 	}
 }
 
