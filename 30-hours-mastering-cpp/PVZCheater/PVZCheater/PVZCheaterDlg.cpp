@@ -72,6 +72,11 @@ DWORD monitorThreadFunc(LPVOID lpThreadParameter) {
 			g_processHandle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processPid);
 		}
 
+		if (g_dlg->m_bnSun.GetCheck()) { // 需要无限阳光
+			DWORD value = 9990;
+			WriteMemory(&value, sizeof(value), 0x6A9EC0, 0x320, 0x8, 0x0, 0x8, 0x144, 0x2c, 0x5560, -1);
+		}
+
 		// 休息睡眠
 		Sleep(1000);
 	}
